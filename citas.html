@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reservar cita — Le Marqués Hair & Beauty</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--negro:#0b0906;--carbon:#151009;--dorado:#c9a227;--dorado-claro:#e8c96a;--marfil:#f4ecda;--gris:#a89e88;--linea:#2c2314}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Jost',sans-serif;background:var(--negro);color:var(--marfil);line-height:1.7;font-weight:300}
+.wrap{max-width:620px;margin:0 auto;padding:0 24px 60px}
+.top{text-align:center;padding:30px 16px 20px}
+.top .script{font-family:'Great Vibes',cursive;font-size:36px;color:var(--dorado-claro)}
+.top h1{font-family:'Cormorant Garamond',serif;font-size:22px;letter-spacing:5px;font-weight:500;margin-top:4px;color:var(--marfil)}
+.top a.atras{color:var(--gris);font-size:13px;text-decoration:none;letter-spacing:1px}
+.pasos{display:flex;justify-content:center;gap:8px;margin:18px 0 26px}
+.paso{width:32px;height:32px;border-radius:50%;border:1px solid var(--dorado);color:var(--dorado-claro);display:flex;align-items:center;justify-content:center;font-size:13px;background:var(--carbon)}
+.paso.activo{background:linear-gradient(135deg,var(--dorado-claro),var(--dorado));border-color:var(--dorado);color:#14100a;font-weight:700}
+.paso.hecho{background:#241b0d;color:var(--dorado-claro)}
+h2{font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:500;text-align:center;color:var(--marfil)}
+.sub{text-align:center;color:var(--gris);font-size:14px;margin:4px 0 22px}
+.aviso{background:#1c150b;border:1px dashed var(--dorado);color:var(--dorado-claro);font-size:13px;text-align:center;padding:10px 14px;margin-bottom:18px;letter-spacing:.5px}
+.opcion{background:var(--carbon);border:1px solid var(--linea);padding:18px;margin-bottom:12px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.opcion.sel{border:1.5px solid var(--dorado);box-shadow:0 2px 14px rgba(201,162,39,.25)}
+.opcion .t b{display:block;font-weight:500;font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--marfil)}
+.opcion .t span{font-size:13px;color:var(--gris)}
+.opcion .precio{background:linear-gradient(135deg,var(--dorado-claro),var(--dorado));color:#14100a;font-weight:600;padding:12px 18px;white-space:nowrap;letter-spacing:1px}
+.opcion .precio small{display:block;font-size:10px;font-weight:400;color:#3a2c10;letter-spacing:1px}
+.dias{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;margin-bottom:16px}
+.dia{min-width:72px;text-align:center;border:1px solid var(--linea);padding:12px 6px;cursor:pointer;background:var(--carbon)}
+.dia b{display:block;font-size:15px;font-family:'Cormorant Garamond',serif;color:var(--marfil)}
+.dia span{font-size:11px;color:var(--gris);letter-spacing:1px}
+.dia.sel{border:1.5px solid var(--dorado);background:#241b0d}
+.dia.cerrado{opacity:.35;cursor:not-allowed}
+.horas{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.hora{border:1px solid var(--linea);padding:13px 6px;text-align:center;cursor:pointer;background:var(--carbon);font-size:14px;letter-spacing:1px;color:var(--marfil)}
+.hora.sel{border:1.5px solid var(--dorado);background:linear-gradient(135deg,var(--dorado-claro),var(--dorado));color:#14100a;font-weight:600}
+.hora.ocupada{opacity:.3;text-decoration:line-through;cursor:not-allowed}
+.campo{margin-bottom:16px}
+.campo label{display:block;font-size:11px;color:var(--dorado-claro);margin-bottom:6px;letter-spacing:3px}
+.campo input,.campo textarea{width:100%;background:var(--carbon);border:1px solid var(--linea);color:var(--marfil);padding:14px;font-size:16px;font-family:'Jost';font-weight:300}
+.resumen{background:var(--carbon);border:1px solid var(--dorado);padding:22px;margin-bottom:18px}
+.resumen .linea{display:flex;justify-content:space-between;padding:7px 0;font-size:15px;border-bottom:1px dotted var(--linea);gap:10px;color:var(--marfil)}
+.resumen .linea:last-child{border:none}
+.resumen .total{font-size:21px;color:var(--dorado-claro);font-weight:500;font-family:'Cormorant Garamond',serif}
+.btn{display:block;width:100%;text-align:center;text-decoration:none;letter-spacing:2.5px;padding:17px;font-size:14px;text-transform:uppercase;border:none;cursor:pointer;font-family:'Jost';font-weight:400}
+.btn-negro{background:linear-gradient(135deg,var(--dorado-claro),var(--dorado));color:#14100a;font-weight:500;margin-top:18px}
+.btn-borde{background:transparent;border:1px solid var(--dorado);color:var(--dorado-claro);margin-top:10px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.ok{text-align:center;padding:30px 10px}
+.ok .big{font-size:52px;color:var(--dorado)}
+.codigo-box{border:1.5px dashed var(--dorado);background:var(--carbon);padding:18px 14px;margin:18px auto;max-width:340px}
+.codigo-box span{display:block;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--dorado-claro);margin-bottom:6px}
+.codigo-box b{font-family:'Cormorant Garamond',serif;font-size:32px;letter-spacing:6px;color:var(--marfil);padding-left:6px}
+.ok h2{margin:12px 0}
+.ok p{color:var(--gris)}
+.pantalla{display:none}
+.pantalla.activa{display:block}
+.lang{text-align:center;margin:12px 0;font-size:12px;letter-spacing:3px}
+.lang button{background:none;border:none;color:var(--gris);font-family:'Jost';font-size:12px;letter-spacing:3px;cursor:pointer;padding:4px 8px}
+.lang button.activo{color:var(--dorado-claro);border-bottom:1px solid var(--dorado)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="script" data-es="Reserva tu cita" data-en="Book your appointment">Reserva tu cita</div>
+    <img src="imgs/logo-original.png" alt="Le Marqués" style="width:210px;max-width:70%;margin:6px auto 0">
+    <a class="atras" href="index.html" data-es="← Volver a la página" data-en="← Back to the page">← Volver a la página</a>
+    <div class="lang"><button id="btn-es" class="activo" onclick="setLang('es')">ES</button> · <button id="btn-en" onclick="setLang('en')">EN</button></div>
+  </div>
+  <div class="pasos" id="pasos"></div>
+
+  <div class="pantalla activa" id="p1">
+    <h2 data-es="Elige tu servicio" data-en="Choose your service">Elige tu servicio</h2>
+    <p class="sub" data-es="El precio es tu botón de reserva" data-en="The price is your booking button">El precio es tu botón de reserva</p>
+    <div class="aviso" data-es="Precios de muestra — el salón los confirma al reservar." data-en="Sample prices — the salon confirms them when booking.">Precios de muestra — el salón los confirma al reservar.</div>
+    <div id="servicios"></div>
+  </div>
+
+  <div class="pantalla" id="p2">
+    <h2 data-es="Elige tu especialista" data-en="Choose your specialist">Elige tu especialista</h2>
+    <p class="sub" data-es="¿Con quién prefieres tu cita?" data-en="Who would you like your appointment with?">¿Con quién prefieres tu cita?</p>
+    <div id="staff"></div>
+    <button class="btn btn-borde" onclick="ir(1)" data-es="← Atrás" data-en="← Back">← Atrás</button>
+  </div>
+
+  <div class="pantalla" id="p3">
+    <h2 data-es="Fecha y hora" data-en="Date and time">Fecha y hora</h2>
+    <p class="sub" data-es="Mar – Sáb · 9:30 am – 6:30 pm" data-en="Tue – Sat · 9:30 am – 6:30 pm">Mar – Sáb · 9:30 am – 6:30 pm</p>
+    <div class="dias" id="dias"></div>
+    <div class="horas" id="horas"></div>
+    <button class="btn btn-borde" onclick="ir(2)" data-es="← Atrás" data-en="← Back">← Atrás</button>
+  </div>
+
+  <div class="pantalla" id="p4">
+    <h2 data-es="Tus datos" data-en="Your details">Tus datos</h2>
+    <p class="sub" data-es="Te contactaremos para confirmar" data-en="We'll contact you to confirm">Te contactaremos para confirmar</p>
+    <div class="campo"><label data-es="Nombre" data-en="Name">Nombre</label><input id="nombre" data-es-ph="Tu nombre" data-en-ph="Your name" placeholder="Tu nombre"></div>
+    <div class="campo"><label data-es="Teléfono" data-en="Phone">Teléfono</label><input id="telefono" type="tel" placeholder="(813) 000-0000"></div>
+    <div class="campo"><label data-es="Notas (opcional)" data-en="Notes (optional)">Notas (opcional)</label><textarea id="notas" rows="2" data-es-ph="Algo que debamos saber…" data-en-ph="Anything we should know…" placeholder="Algo que debamos saber…"></textarea></div>
+    <button class="btn btn-negro" id="btn-datos" onclick="guardarDatos()" disabled data-es="Continuar" data-en="Continue">Continuar</button>
+    <button class="btn btn-borde" onclick="ir(3)" data-es="← Atrás" data-en="← Back">← Atrás</button>
+  </div>
+
+  <div class="pantalla" id="p5">
+    <h2 data-es="Pago" data-en="Payment">Pago</h2>
+    <p class="sub" data-es="Paga en el salón el día de tu cita" data-en="Pay at the salon on your appointment day">Paga en el salón el día de tu cita</p>
+    <div class="resumen" id="resumen"></div>
+    <div class="opcion sel"><div class="t"><b data-es="Pago en el local" data-en="Pay at the salon">Pago en el local</b><span data-es="Efectivo o tarjeta el día de tu cita" data-en="Cash or card on your appointment day">Efectivo o tarjeta el día de tu cita</span></div><div class="precio" id="precio-pago">$0</div></div>
+    <div class="aviso" data-es="Demostración: no se realiza ningún cobro real." data-en="Demo: no real charge is made.">Demostración: no se realiza ningún cobro real.</div>
+    <button class="btn btn-negro" onclick="confirmar()" data-es="Confirmar mi cita" data-en="Confirm my appointment">Confirmar mi cita</button>
+    <button class="btn btn-borde" onclick="ir(4)" data-es="← Atrás" data-en="← Back">← Atrás</button>
+  </div>
+
+  <div class="pantalla" id="p6">
+    <div class="ok">
+      <div class="big">✦</div>
+      <h2 data-es="¡Cita reservada!" data-en="Appointment booked!">¡Cita reservada!</h2>
+      <div class="codigo-box">
+        <span data-es="Tu código de confirmación" data-en="Your confirmation code">Tu código de confirmación</span>
+        <b id="codigo-cita">LM-······</b>
+      </div>
+      <p id="conf-texto"></p>
+      <p style="margin-top:10px" data-es="Te contactaremos para confirmar. Tu momento de brillar comienza aquí." data-en="We'll contact you to confirm. Your moment to shine starts here.">Te contactaremos para confirmar. Tu momento de brillar comienza aquí.</p>
+      <a class="btn btn-negro" id="btn-wpp-conf" href="#" data-es="Confirmar por WhatsApp" data-en="Confirm via WhatsApp">Confirmar por WhatsApp</a>
+      <a class="btn btn-borde" href="index.html" data-es="Volver a la página" data-en="Back to the page">Volver a la página</a>
+    </div>
+  </div>
+</div>
+
+<script>
+var LANG='es';
+var T={
+es:{servicios:[
+ {n:'Corte de cabello / Haircut',d:'45 min',p:35},
+ {n:'Color / Balayage',d:'120 min',p:120},
+ {n:'Manicure & Pedicure',d:'60 min',p:45},
+ {n:'Uñas en gel / Gel nails',d:'60 min',p:40},
+ {n:'Facial',d:'60 min',p:60},
+ {n:'Maquillaje / Make-up',d:'45 min',p:55}],
+ staff:['Jose Manuel','Primer especialista disponible'],
+ muestra:'muestra'},
+en:{servicios:[
+ {n:'Haircut / Corte de cabello',d:'45 min',p:35},
+ {n:'Color / Balayage',d:'120 min',p:120},
+ {n:'Manicure & Pedicure',d:'60 min',p:45},
+ {n:'Gel nails / Uñas en gel',d:'60 min',p:40},
+ {n:'Facial',d:'60 min',p:60},
+ {n:'Make-up / Maquillaje',d:'45 min',p:55}],
+ staff:['Jose Manuel','First available specialist'],
+ muestra:'sample'}};
+var sel={serv:null,staff:null,fecha:null,hora:null};
+var paso=1;
+var diasN={es:['DOM','LUN','MAR','MIÉ','JUE','VIE','SÁB'],en:['SUN','MON','TUE','WED','THU','FRI','SAT']};
+var meses={es:['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'],en:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']};
+function setLang(l){
+ LANG=l;document.documentElement.lang=l;
+ document.querySelectorAll('[data-es]').forEach(function(el){el.innerHTML=(l==='es')?el.getAttribute('data-es'):el.getAttribute('data-en');});
+ document.querySelectorAll('[data-es-ph]').forEach(function(el){el.placeholder=(l==='es')?el.getAttribute('data-es-ph'):el.getAttribute('data-en-ph');});
+ document.getElementById('btn-es').classList.toggle('activo',l==='es');
+ document.getElementById('btn-en').classList.toggle('activo',l==='en');
+ renderServicios();renderStaff();renderDias();renderResumen();
+ try{localStorage.setItem('lm2-citas-lang',l);}catch(e){}
+}
+function dibujarPasos(){
+ var h='';
+ for(var i=1;i<=6;i++){h+='<div class="paso'+(i===paso?' activo':(i<paso?' hecho':''))+'">'+i+'</div>';}
+ document.getElementById('pasos').innerHTML=h;
+}
+function ir(n){paso=n;dibujarPasos();
+ document.querySelectorAll('.pantalla').forEach(function(p){p.classList.remove('activa');});
+ document.getElementById('p'+n).classList.add('activa');window.scrollTo(0,0);}
+function renderServicios(){
+ var h='';
+ T[LANG].servicios.forEach(function(s,i){
+  h+='<div class="opcion'+(sel.serv===i?' sel':'')+'" onclick="elegirServ('+i+')"><div class="t"><b>'+s.n+'</b><span>'+s.d+'</span></div><div class="precio">$'+s.p+'<small>'+T[LANG].muestra+'</small></div></div>';});
+ document.getElementById('servicios').innerHTML=h;
+}
+function elegirServ(i){sel.serv=i;renderServicios();setTimeout(function(){ir(2);},250);}
+function renderStaff(){
+ var h='';
+ T[LANG].staff.forEach(function(s,i){
+  h+='<div class="opcion'+(sel.staff===i?' sel':'')+'" onclick="elegirStaff('+i+')"><div class="t"><b>'+s+'</b></div><div class="precio" style="background:none;border:1px solid var(--dorado);color:var(--dorado-claro)">→</div></div>';});
+ document.getElementById('staff').innerHTML=h;
+}
+function elegirStaff(i){sel.staff=i;renderStaff();setTimeout(function(){ir(3);},250);}
+function renderDias(){
+ var h='';var hoy=new Date();
+ for(var i=0;i<14;i++){
+  var f=new Date(hoy);f.setDate(hoy.getDate()+i);
+  var dow=f.getDay();
+  var abierto=(dow>=2&&dow<=6);
+  var id=f.toISOString().slice(0,10);
+  h+='<div class="dia'+(sel.fecha===id?' sel':'')+(abierto?'':' cerrado')+'" '+(abierto?('onclick="elegirDia(\''+id+'\')"'):'')+'><b>'+f.getDate()+'</b><span>'+diasN[LANG][dow]+' '+meses[LANG][f.getMonth()]+'</span></div>';
+ }
+ document.getElementById('dias').innerHTML=h;
+ if(sel.fecha) renderHoras();
+}
+function elegirDia(id){sel.fecha=id;sel.hora=null;renderDias();}
+function renderHoras(){
+ var h='';
+ var horas=['9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00'];
+ horas.forEach(function(hh){
+  var hash=0;var k=sel.fecha+hh;
+  for(var j=0;j<k.length;j++)hash=(hash*31+k.charCodeAt(j))%97;
+  var ocupada=(hash<22);
+  h+='<div class="hora'+(sel.hora===hh?' sel':'')+(ocupada?' ocupada':'')+'" '+(ocupada?'':('onclick="elegirHora(\''+hh+'\')"'))+'>'+hh+'</div>';
+ });
+ document.getElementById('horas').innerHTML=h;
+}
+function elegirHora(hh){sel.hora=hh;renderHoras();setTimeout(function(){ir(4);},250);}
+['nombre','telefono'].forEach(function(id){
+ document.getElementById(id).addEventListener('input',function(){
+  var ok=document.getElementById('nombre').value.trim().length>1&&document.getElementById('telefono').value.trim().length>6;
+  document.getElementById('btn-datos').disabled=!ok;
+ });
+});
+function guardarDatos(){ir(5);renderResumen();}
+function renderResumen(){
+ if(sel.serv===null)return;
+ var s=T[LANG].servicios[sel.serv];
+ var f=new Date(sel.fecha+'T12:00:00');
+ var fl=(LANG==='es'?'Fecha':'Date')+': '+diasN[LANG][f.getDay()]+' '+f.getDate()+' '+meses[LANG][f.getMonth()]+' · '+sel.hora;
+ document.getElementById('resumen').innerHTML=
+  '<div class="linea"><span>'+s.n+'</span><b>$'+s.p+' <small style="color:var(--dorado-claro)">'+T[LANG].muestra+'</small></b></div>'+
+  '<div class="linea"><span>'+(LANG==='es'?'Especialista':'Specialist')+'</span><b>'+T[LANG].staff[sel.staff]+'</b></div>'+
+  '<div class="linea"><span>'+fl+'</span></div>'+
+  '<div class="linea total"><span>Total</span><span>$'+s.p+'</span></div>';
+ document.getElementById('precio-pago').textContent='$'+s.p;
+}
+function generarCodigo(){
+ var chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+ var c='';
+ for(var i=0;i<6;i++) c+=chars[Math.floor(Math.random()*chars.length)];
+ return 'LM-'+c;
+}
+function confirmar(){
+ var s=T[LANG].servicios[sel.serv];
+ var f=new Date(sel.fecha+'T12:00:00');
+ var codigo=generarCodigo();
+ document.getElementById('codigo-cita').textContent=codigo;
+ var txt=(LANG==='es'?'Código':'Code')+': '+codigo+' · '+(LANG==='es'?'Servicio':'Service')+': '+s.n+' ($'+s.p+' '+T[LANG].muestra+') · '+(LANG==='es'?'Especialista':'Specialist')+': '+T[LANG].staff[sel.staff]+' · '+diasN[LANG][f.getDay()]+' '+f.getDate()+' '+meses[LANG][f.getMonth()]+' '+sel.hora+' · '+document.getElementById('nombre').value;
+ document.getElementById('conf-texto').textContent=txt;
+ var msg=encodeURIComponent((LANG==='es'?'Hola Le Marqués, quiero confirmar mi cita: ':'Hi Le Marqués, I want to confirm my appointment: ')+txt);
+ document.getElementById('btn-wpp-conf').href='https://wa.me/18132972107?text='+msg;
+ ir(6);
+}
+dibujarPasos();renderServicios();renderStaff();renderDias();
+try{var s=localStorage.getItem('lm2-citas-lang');if(s==='en')setLang('en');}catch(e){}
+</script>
+</body>
+</html>
